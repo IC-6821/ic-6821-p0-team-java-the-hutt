@@ -46,10 +46,21 @@ public class Game{
     public void displayBoard() {board.showBoard();}
 
 
+    public void playerMove() {
+        Scanner input_usuario = new Scanner(System.in);
 
+        // Lineas que se muestran al jugador
+        System.out.print("Ingrese la fila (arriba, medio, abajo): ");
+        System.out.println();
+        String yPosition = input_usuario.nextLine();
+        System.out.print("Ingrese la columna (izquierda, centro, derecha): ");
+        System.out.println();
+        String xPosition = input_usuario.nextLine();
+        // Si esta disponible hace el movimiento
+        if (board.canPlace(rowWordMap.get(yPosition), columnWordMap.get(xPosition))) {
+            board.setCell(rowWordMap.get(yPosition), columnWordMap.get(xPosition), 'X');}
 
+        else {System.out.println("Celda ocupaba");}
 
-
-
-
+    }
 }
