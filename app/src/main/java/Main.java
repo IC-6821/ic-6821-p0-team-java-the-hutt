@@ -9,7 +9,6 @@ public class Main {
             game.playerMove();
             // Mostrar tablero
             game.displayBoard();
-
             // llamar a funcion para verificar si gano
             if (game.verifiyWin('X')) {
                 System.out.println("Has ganado");
