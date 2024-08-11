@@ -1,5 +1,7 @@
 package com.modules.logic;
 import java.util.HashMap;
+import java.util.Scanner;
+
 
 
 public class Game{
@@ -7,7 +9,7 @@ public class Game{
     private HashMap<String, Integer> rowWordMap; //This will help translate words like 'arriba' to a number corresponding to the position on the board.
     private HashMap<String, Integer> columnWordMap; //This will help translate the words that affect columns like "izquierda", "centro" and "derecha".
 
-    Game(){
+    public Game(){
         board = new Board();
         rowWordMap = new HashMap<>();
 
@@ -41,5 +43,13 @@ public class Game{
         return board.verifyWin(symbol);
     }
 
-    
+    public void displayBoard() {board.showBoard();}
+
+
+
+
+
+
+
+
 }
