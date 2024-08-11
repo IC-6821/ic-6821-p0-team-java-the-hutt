@@ -27,8 +27,12 @@ class Board{
 
     }
 
-    public Cell getCell(int i, int j){
-        return board[i][j];
+    public void setCell(int yCoordinate, int xCoordinate, char symbol){ //changes value of cell in the selected coordinate;
+        board[yCoordinate][xCoordinate].setSymbol(symbol);
+    }
+
+    public boolean canPlace(int yCoordinate, int xCoordinate){ //verifies if the symbol placement is valid.
+        return board[yCoordinate][xCoordinate].getSymbol() == ' ';
     }
 
 
