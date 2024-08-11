@@ -8,6 +8,7 @@ public class Main {
             // Llamar al método para que haga un movimiento
             game.playerMove();
             // Mostrar tablero
+
             game.displayBoard();
             // llamar a funcion para verificar si gano
             if (game.verifiyWin('X')) {
