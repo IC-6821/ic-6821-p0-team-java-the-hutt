@@ -43,7 +43,7 @@ public class Game{
         return board.verifyWin(symbol);
     }
 
-    public void displayBoard() {board.showBoard();}
+    public void displayBoard() {Graphics.showBoard();}
 
 
     public void playerMove() {
