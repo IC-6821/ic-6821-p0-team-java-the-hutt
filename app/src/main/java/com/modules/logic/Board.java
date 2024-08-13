@@ -38,7 +38,7 @@ class Board{
     /**
      * This function will return ithe symbol in the coordenates given
      */
-    private char getBoardSymbol(int yCoordinate, int xCoordinate){ //verifies if the symbol placement is valid.
+    public char getBoardSymbol(int yCoordinate, int xCoordinate){ //verifies if the symbol placement is valid.
         return board[yCoordinate][xCoordinate].getSymbol();
     }
 

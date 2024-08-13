@@ -9,9 +9,11 @@ public class Game{
     private HashMap<String, Integer> rowWordMap; //This will help translate words like 'arriba' to a number corresponding to the position on the board.
     private HashMap<String, Integer> columnWordMap; //This will help translate the words that affect columns like "izquierda", "centro" and "derecha".
 
+    private Graphics graphics;
     public Game(){
         board = new Board();
         rowWordMap = new HashMap<>();
+        graphics = new Graphics(); //TODO: hotfix changes, implement a real solution asap
 
         rowWordMap.put("arriba", 0);
         rowWordMap.put("medio", 1);
@@ -43,7 +45,7 @@ public class Game{
         return board.verifyWin(symbol);
     }
 
-    public void displayBoard() {Graphics.showBoard();}
+    public void displayBoard() {graphics.showBoard();} //changed a wrongful static reference to the Graphic class into a reference to an instance
 
 
     public void playerMove() {
@@ -52,7 +54,7 @@ public class Game{
         // Lineas que se muestran al jugador
         System.out.print("Ingrese la fila (arriba, medio, abajo): ");
         System.out.println();
-        String yPosition = input_usuario.nextLine();
+        String yPosition = input_usuario.nextLine(); //this is throwing an exception when running with 'gradle run'.
         System.out.print("Ingrese la columna (izquierda, centro, derecha): ");
         System.out.println();
         String xPosition = input_usuario.nextLine();

@@ -1,8 +1,7 @@
 package com.modules.logic;
 
 public class Graphics {
-    
-
+    Board board = new Board(); //TODO: this declaration is of hotfix purpose. Check if it breaks the logic to declare it here.
 
     public void showBoard() {
         String separador = "-----------";
