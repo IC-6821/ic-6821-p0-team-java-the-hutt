@@ -2,7 +2,8 @@ package com.modules.logic;
 
 
 
-class Board{
+class
+Board{
 
     private Cell[][] board;
 
@@ -23,8 +24,6 @@ class Board{
                 board[i][j] = new Cell();
             }
         }
-
-
     }
 
     public void setCell(int yCoordinate, int xCoordinate, char symbol){ //changes value of cell in the selected coordinate;
@@ -35,6 +34,7 @@ class Board{
         return board[yCoordinate][xCoordinate].getSymbol() == ' ';
     }
 
+<<<<<<< Updated upstream
     /**
      * This function will return ithe symbol in the coordenates given
      */
@@ -42,10 +42,11 @@ class Board{
         return board[yCoordinate][xCoordinate].getSymbol();
     }
 
+=======
+>>>>>>> Stashed changes
     /**
      * This function will determine if the player or the computer has won the game
      */
-    
 
     /**
      * These function will determine if the player won by filling a column.
@@ -63,9 +64,6 @@ class Board{
     private boolean rightColumnWin(char symbol){
         return board[0][2].getSymbol() == symbol && board[1][2].getSymbol() == symbol && board[2][2].getSymbol() == symbol;
     }
-
-
-
 
     /**
      * These function will determine if the player won by filling a row with the same symbol.
@@ -116,6 +114,7 @@ class Board{
 
     }
 
+<<<<<<< Updated upstream
     
 
 
@@ -123,6 +122,24 @@ class Board{
 
 
 
+=======
+    public void showBoard() {
+        String separador = "-----------";
+
+        for (int rows = 0; rows < 3; rows++) {
+
+            for (int columns = 0; columns < 3; columns++) {
+
+                System.out.print(" " + board[rows][columns].getSymbol() + " ");
+
+                if (columns < 2) System.out.print("|");}
+
+            System.out.println();
+
+            if (rows < 2) {System.out.println(separador);}
+        }
+    }
+>>>>>>> Stashed changes
 }
 
 
