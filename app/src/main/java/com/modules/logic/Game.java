@@ -44,16 +44,16 @@ public class Game {
     }
 
     public void displayBoard() {
-        graphics.showBoard(); //
+        graphics.showBoard();
     }
 
     public void playerMove() {
-        Scanner input_user = new Scanner(System.in);
+        Scanner userInput = new Scanner(System.in);
         //Asks the user for the row and column where they want to place their symbol.
         System.out.print("Ingrese la fila (arriba, medio, abajo): ");
-        String yPosition = input_user.nextLine();
+        String yPosition = userInput.nextLine(); //TODO: change this behavior so that it asks for the whole move in one line.
         System.out.print("Ingrese la columna (izquierda, centro, derecha): ");
-        String xPosition = input_user.nextLine();
+        String xPosition = userInput.nextLine();
 
         if (board.canPlace(rowWordMap.get(yPosition), columnWordMap.get(xPosition))) {
             board.setCell(rowWordMap.get(yPosition), columnWordMap.get(xPosition), 'X');
