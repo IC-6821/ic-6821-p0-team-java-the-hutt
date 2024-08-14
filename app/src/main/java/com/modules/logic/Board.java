@@ -1,7 +1,8 @@
 package com.modules.logic;
 
-class Board {
+public class Board {
     private Cell[][] board;
+    private final int MAX_POSITIONS = 9;
 
     Board() {
         board = new Cell[3][3];
@@ -20,6 +21,7 @@ class Board {
     public boolean canPlace(int yCoordinate, int xCoordinate) {
         return board[yCoordinate][xCoordinate].getSymbol() == ' ';
     }
+
 
     public char getBoardSymbol(int yCoordinate, int xCoordinate) {
         return board[yCoordinate][xCoordinate].getSymbol();
@@ -62,21 +64,20 @@ class Board {
                 || bottomRowWin(symbol) || mainDiagonalWin(symbol) || secondaryDiagonalWin(symbol);
     }
 
-
-
-
-
-    //bound to be deleted, there is no use for it in the code
-    public void showBoard() {
-        for (int rows = 0; rows < 3; rows++) {
-            for (int columns = 0; columns < 3; columns++) {
-                System.out.print(" " + board[rows][columns].getSymbol() + " ");
-                if (columns < 2) System.out.print("|");
-            }
-            System.out.println();
-            if (rows < 2) {
-                System.out.println("-----------");
+    private int countBusyCells() {
+        int count = 0;
+        for (int i = 0; i < 3; i++) {
+            for (int j = 0; j < 3; j++) {
+                if (board[i][j].getSymbol() != ' ') count++;
             }
         }
+        return count;
+    }
+
+    public boolean checkForTie() {
+        if (countBusyCells() == MAX_POSITIONS) {
+            return true;
+        }
+        return false;
     }
 }

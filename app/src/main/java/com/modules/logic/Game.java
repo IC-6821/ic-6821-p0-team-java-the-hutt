@@ -31,7 +31,6 @@ public class Game {
     public boolean placeIfValidMove(String yPosition, String xPosition, char symbol) {
         int yKey = rowWordMap.get(yPosition);
         int xKey = columnWordMap.get(xPosition);
-        //Creo que este if es redundante
         if (board.canPlace(yKey, xKey)) { //Checks if the symbol can be placed on the desired position
             board.setCell(yKey, xKey, symbol);
             return true;
@@ -46,8 +45,18 @@ public class Game {
     }
 
 
-    public boolean verifyWin(char symbol) { //Checks if the player or the AI has won.
-        return board.verifyWin(symbol);
+    public boolean verifyWin(char playingSymbol) { //Checks if the player or the AI has won.
+        boolean winConfirmed = board.verifyWin(playingSymbol);
+        String winMessage = "Perdiste...";
+        if (winConfirmed && playingSymbol == 'X') {
+            winMessage = "Ganaste!";
+            displayBoard();
+            System.out.println(winMessage);
+        }
+        if (winConfirmed && playingSymbol == 'O') {
+            System.out.println(winMessage);
+        }
+        return winConfirmed;
     }
 
     public void displayBoard() {
@@ -77,10 +86,12 @@ public class Game {
                 }
                 else {
                     System.out.println("Celda ocupada. Intente de nuevo.");
+                    displayBoard();
                 }
             }
             else {
                 System.out.println("Coordenadas incorrectas. Revise las opciones y redáctelas correctamente.");
+                displayBoard();
             }
         }
     }
@@ -89,5 +100,14 @@ public class Game {
     public void aiMove() {
         int[] move = easyAI.getRandomMove(board);
         board.setCell(move[0], move[1], 'O');
+    }
+
+    public boolean isTied(){
+        if (board.checkForTie()) {
+            displayBoard();
+            System.out.println("Empate -_-");
+            return true;
+        }
+        return false;
     }
 }
