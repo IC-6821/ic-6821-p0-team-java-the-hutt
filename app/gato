@@ -1,2 +1,2 @@
 #!/bin/bash
-java -jar build/libs/app.jar
+java -jar build/libs/app.jar "$@"
