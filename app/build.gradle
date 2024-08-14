@@ -16,13 +16,13 @@ test {
 }
 
 application {
-    mainClass.set('Main') // Cambia mainClassName a mainClass.set y usa el nombre correcto de la clase principal
+    mainClass.set('Main')
 }
 
 jar {
     manifest {
         attributes(
-                'Main-Class': 'Main' // Define el nombre completo de la clase principal aquí
+                'Main-Class': 'Main'
         )
     }
 }
