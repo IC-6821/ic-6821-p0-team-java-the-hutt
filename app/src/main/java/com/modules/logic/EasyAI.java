@@ -2,20 +2,20 @@ package com.modules.logic;
 import java.util.Random;
 
 public class EasyAI {
-    private Random random;
+    private Random positionGenerator;
 
     public EasyAI() {
-        random = new Random();
+        positionGenerator = new Random();
     }
 
     public int[] getRandomMove(Board board) {
         int[] move = new int[2];
-        int row = random.nextInt(3);
-        int column = random.nextInt(3);
+        int row = positionGenerator.nextInt(3);
+        int column = positionGenerator.nextInt(3);
 
         while (!board.canPlace(row, column)){
-            row = random.nextInt(3);
-            column = random.nextInt(3);
+            row = positionGenerator.nextInt(3);
+            column = positionGenerator.nextInt(3);
         }
 
         move[0] = row;
