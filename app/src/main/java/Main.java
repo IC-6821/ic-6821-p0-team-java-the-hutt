@@ -6,20 +6,20 @@ public class Main {
 
         while (true) {
             //Player move
-            game.displayBoard();
+            // game.displayBoard(); stopped showing the board twice in each iteration.
             game.playerMove();
             if (game.verifyWin('X')) { //Checks if the player has won.
                 game.displayBoard();
-                System.out.println("Has ganado!!");
+                System.out.println("Ganaste :D");
                 break;
             }
 
             //AI move
-            game.displayBoard();
             game.aiMove();
+            game.displayBoard(); // moved the process of showing the board after the play to represent the most recent state of the game.
             if (game.verifyWin('O')) { //Checks if the AI has won.
                 game.displayBoard();
-                System.out.println("Has perdido!!");
+                System.out.println("Perdiste D:");
                 break;
             }
         }

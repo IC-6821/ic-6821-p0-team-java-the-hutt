@@ -8,7 +8,7 @@ package com.modules.logic;
 class Cell{
     private char symbol;
 
-    //Creates cell with the initial value of ' '.
+    //Creates cell with an initial value of ' '.
     Cell(){
         this.symbol = ' ';
     }

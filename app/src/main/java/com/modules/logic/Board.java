@@ -58,9 +58,15 @@ class Board {
     }
 
     public boolean verifyWin(char symbol) {
-        return leftColumnWin(symbol) || midColumnWin(symbol) || rightColumnWin(symbol) || topRowWin(symbol) || midRowWin(symbol) || bottomRowWin(symbol) || mainDiagonalWin(symbol) || secondaryDiagonalWin(symbol);
+        return leftColumnWin(symbol) || midColumnWin(symbol) || rightColumnWin(symbol) || topRowWin(symbol) || midRowWin(symbol)
+                || bottomRowWin(symbol) || mainDiagonalWin(symbol) || secondaryDiagonalWin(symbol);
     }
 
+
+
+
+
+    //bound to be deleted, there is no use for it in the code
     public void showBoard() {
         for (int rows = 0; rows < 3; rows++) {
             for (int columns = 0; columns < 3; columns++) {

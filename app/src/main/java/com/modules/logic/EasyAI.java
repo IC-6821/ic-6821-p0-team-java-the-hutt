@@ -10,15 +10,15 @@ public class EasyAI {
 
     public int[] getRandomMove(Board board) {
         int[] move = new int[2];
-        int row, col;
+        int row, column;
 
         do {
             row = random.nextInt(3);
-            col = random.nextInt(3);
-        } while (!board.canPlace(row, col));
+            column = random.nextInt(3);
+        } while (!board.canPlace(row, column));
 
         move[0] = row;
-        move[1] = col;
+        move[1] = column;
 
         return move;
     }
