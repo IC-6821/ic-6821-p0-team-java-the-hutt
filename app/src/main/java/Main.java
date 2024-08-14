@@ -2,6 +2,23 @@ import com.modules.logic.Game;
 
 public class Main {
     public static void main(String[] args) {
+
+        if (args.length != 2) {
+            System.out.println("Argumentos incompatibles. Se esperan 2 para ejecutar el juego. \n Sugerencia: usar -n f");
+            return;
+        }
+
+        if (!args[0].equals("-n")) {
+            System.out.println("Parámetro desconocido, ejecuta el juego nuevamente.");
+            return;
+        }
+
+        String difficulty = args[1];
+        if (!difficulty.equals("f")) {
+            System.out.println("Esta dificultad aún no está disponible. Utilice -n f para jugar.");
+            return;
+        }
+
         Game game = new Game();
 
         game.displayBoard(); // moved from the body of the loop to the outside so it only prints it before playing on the first run
