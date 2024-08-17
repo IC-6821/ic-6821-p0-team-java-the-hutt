@@ -1,41 +1,28 @@
 import com.modules.logic.Game;
+import com.modules.logic.Graphics;
 
 public class Main {
     public static void main(String[] args) {
-
-        if (args.length != 2) {
-            System.out.println("Argumentos incompatibles. Se esperan 2 para ejecutar el juego. \n Sugerencia: usar -n f");
-            return;
-        }
-
-        if (!args[0].equals("-n")) {
-            System.out.println("Parámetro desconocido, ejecuta el juego nuevamente.");
-            return;
-        }
-
-        String difficulty = args[1];
-        if (!difficulty.equals("f")) {
-            System.out.println("Esta dificultad aún no está disponible. Utilice -n f para jugar.");
-            return;
-        }
+        Graphics graphics = new Graphics(null, null);
+        graphics.validateArguments(args);
 
         Game game = new Game();
 
-        game.displayBoard(); // moved from the body of the loop to the outside so it only prints it before playing on the first run
+        game.showBoard();
+
         while (true) {
-            //Player move
-            // game.displayBoard(); stopped showing the board twice in each iteration.
             game.playerMove();
-            if (game.verifyWin('X')) { //Checks if the player has won.
+            if (game.verifyWin('X')) { // Check if the player has won
                 break;
             }
 
-            if (game.isTied()) {break;} // we chose to only break since the printing instructions were delegated to the game
+            if (game.isTied()) { // Check if the game is tied
+                break;
+            }
 
-            //AI move
             game.aiMove();
-            game.displayBoard(); // moved the process of showing the board after the play to represent the most recent state of the game.
-            if (game.verifyWin('O')) { //Checks if the AI has won.
+            game.showBoard(); // Show the updated board
+            if (game.verifyWin('O')) { // Check if the AI has won
                 break;
             }
         }
