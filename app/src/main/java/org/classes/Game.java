@@ -1,12 +1,18 @@
-package com.modules.logic;
+package org.classes;
+
 
 import java.util.HashMap;
 import java.util.Scanner;
+import interfaces.GameSet;
 
-public class Game {
+public final class Game implements GameSet {
     private Board board;
-    private HashMap<String, Integer> rowWordMap; //This will help translate the words used for the rows for example 'arriba'
-    private HashMap<String, Integer> columnWordMap; //This will translate the words used for the columns 'centro' is an example
+    private HashMap<String, Integer> rowWordMap;
+    //This will help translate the words used for the rows for example 'arriba'
+    private HashMap<String, Integer> columnWordMap;
+    //This will translate the words used for the columns 'centro' is an example
+
+
     private EasyAI easyAI;
     private Graphics graphics;
 
@@ -29,8 +35,8 @@ public class Game {
 
 
     public boolean placeIfValidMove(String yPosition, String xPosition, char symbol) {
-        int yKey = rowWordMap.get(yPosition);
-        int xKey = columnWordMap.get(xPosition);
+        final int yKey = rowWordMap.get(yPosition);
+        final int xKey = columnWordMap.get(xPosition);
         if (board.canPlace(yKey, xKey)) { //Checks if the symbol can be placed on the desired position
             board.setCell(yKey, xKey, symbol);
             return true;
@@ -39,14 +45,14 @@ public class Game {
     }
 
 
-    public boolean checkChosenPosition(String yPosition, String xPosition){
+    public boolean checkChosenPosition(String yPosition, String xPosition) {
         //Checks if the words for the chosenposition is valid.
         return rowWordMap.containsKey(yPosition) && columnWordMap.containsKey(xPosition);
     }
 
 
     public boolean verifyWin(char playingSymbol) { //Checks if the player or the AI has won.
-        boolean winConfirmed = board.verifyWin(playingSymbol);
+        final boolean winConfirmed = board.verifyWin(playingSymbol);
         String winMessage = "Perdiste...";
         if (winConfirmed && playingSymbol == 'X') {
             winMessage = "Ganaste!";
@@ -65,31 +71,32 @@ public class Game {
 
 
     public void playerMove() {
-        Scanner userInput = new Scanner(System.in);
+        final Scanner userInput = new Scanner(System.in);
 
         boolean moveFinished = false;
 
         while (!moveFinished) {
             //Asks the user for the positions where they want to place the 'X'.
             System.out.print("Ingrese la fila (arriba, medio, abajo): ");
-            String yPosition = userInput.nextLine(); //TODO: change this behavior so that it asks for the whole move in one line.
+            final String yPosition = userInput.nextLine();
+            //todo: change this behavior so that it asks for the whole move in one line.
             System.out.print("Ingrese la columna (izquierda, centro, derecha): ");
-            String xPosition = userInput.nextLine();
+            final String xPosition = userInput.nextLine();
 
             // check for proper word input
             if (checkChosenPosition(yPosition, xPosition)) {
                 // check for placement
                 if (placeIfValidMove(yPosition, xPosition, 'X')) {
-                    // we added loops in this method to prevent cases where the input words were wrong or the position already
-                    // held a character but the execution still attempted to go on normally even if a rule was being broken.
+                    // we added loops in this method to prevent cases 
+                    // where the input words were wrong or the position already
+                    // held a character but the execution still attempted to go on 
+                    // normally even if a rule was being broken.
                     moveFinished = true;
-                }
-                else {
+                } else {
                     System.out.println("Celda ocupada. Intente de nuevo.");
                     displayBoard();
                 }
-            }
-            else {
+            } else {
                 System.out.println("Coordenadas incorrectas. Revise las opciones y redáctelas correctamente.");
                 displayBoard();
             }
@@ -98,11 +105,11 @@ public class Game {
 
 
     public void aiMove() {
-        int[] move = easyAI.getRandomMove(board);
+        final int[] move = easyAI.getRandomMove(board);
         board.setCell(move[0], move[1], 'O');
     }
 
-    public boolean isTied(){
+    public boolean isTied() {
         if (board.checkForTie()) {
             displayBoard();
             System.out.println("Empate -_-");

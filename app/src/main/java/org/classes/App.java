@@ -1,10 +1,16 @@
-import com.modules.logic.Game;
+package org.classes;
 
-public class Main {
+
+
+
+public final class App {
+    private App() {
+
+    }
     public static void main(String[] args) {
 
         if (args.length != 2) {
-            System.out.println("Argumentos incompatibles. Se esperan 2 para ejecutar el juego. \n Sugerencia: usar -n f");
+            System.out.println("Argumentos incompatibles. Se esperan 2 para ejecutar el juego.\n Sugerencia usar -n f");
             return;
         }
 
@@ -13,15 +19,16 @@ public class Main {
             return;
         }
 
-        String difficulty = args[1];
+        final String difficulty = args[1];
         if (!difficulty.equals("f")) {
             System.out.println("Esta dificultad aún no está disponible. Utilice -n f para jugar.");
             return;
         }
 
-        Game game = new Game();
+        final Game game = new Game();
 
-        game.displayBoard(); // moved from the body of the loop to the outside so it only prints it before playing on the first run
+        game.displayBoard(); // moved from the body of the loop to the outside 
+                            // so it only prints it before playing on the first run
         while (true) {
             //Player move
             // game.displayBoard(); stopped showing the board twice in each iteration.
@@ -30,11 +37,16 @@ public class Main {
                 break;
             }
 
-            if (game.isTied()) {break;} // we chose to only break since the printing instructions were delegated to the game
+            if (game.isTied()) {
+                break;
+            } // we chose to only break since the printing 
+            // instructions were delegated to the game
 
             //AI move
             game.aiMove();
-            game.displayBoard(); // moved the process of showing the board after the play to represent the most recent state of the game.
+            game.displayBoard(); // moved the process of showing the board 
+                                // after the play to represent the most 
+                                // recent state of the game.
             if (game.verifyWin('O')) { //Checks if the AI has won.
                 break;
             }
