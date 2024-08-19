@@ -1,23 +1,38 @@
 package org.classes;
 
-import interfaces.DisplayBoard;
+import interfaces.GameContainer;
+import interfaces.GameSet;
+import interfaces.UserIO;
 
+import java.util.Map;
 import java.util.Scanner;
 
-public class Graphics implements DisplayBoard {
-    private Board board;
-    private final String verticalSeparator = "-----------";
-    private final char horizontalSeparator = '|';
-    private final String WHITESPACE = " ";
-    private Game game;
+public class UserConsoleInterpreter implements UserIO {
+    private final GameContainer board;
+    private static final String verticalSeparator = "-----------";
+    private static final char horizontalSeparator = '|';
+    private static final String WHITESPACE = " ";
+    private final GameSet game;
 
-    public Graphics(Board board, Game game) {
+    private static final Map<String, BoardPosition> inputMap = Map.of(
+            "top-left", BoardPosition.TOP_LEFT,
+            "top-center", BoardPosition.TOP_CENTER,
+            "top-right", BoardPosition.TOP_RIGHT,
+            "middle-left", BoardPosition.MIDDLE_LEFT,
+            "middle-center", BoardPosition.MIDDLE_CENTER,
+            "middle-right", BoardPosition.MIDDLE_RIGHT,
+            "bottom-left", BoardPosition.BOTTOM_LEFT,
+            "bottom-center", BoardPosition.BOTTOM_CENTER,
+            "bottom-right", BoardPosition.BOTTOM_RIGHT
+    );
+
+    public UserConsoleInterpreter(GameContainer board, GameSet game) {
         this.board = board;
         this.game = game;
     }
 
     private void printGameboardRow(int currentRow, int currentColumn) {
-        System.out.print(WHITESPACE + this.board.getBoardSymbol(currentRow, currentColumn) + WHITESPACE);
+        System.out.print(WHITESPACE + this.board.getGameSymbolAtSlot(currentRow, currentColumn) + WHITESPACE);
         if (currentColumn < 2) System.out.print(horizontalSeparator);
     }
 
@@ -54,6 +69,11 @@ public class Graphics implements DisplayBoard {
             System.out.println(difficulty_not_available);
             return;
         }
+    }
+
+    @Override
+    public BoardPosition interpretPlayerMove() {
+        return null;
     }
 
     @Override

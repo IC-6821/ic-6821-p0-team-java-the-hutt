@@ -1,34 +1,36 @@
 package org.classes;
-import interfaces.DisplayBoard;
+import interfaces.GameContainer;
+import interfaces.GameDifficulty;
+import interfaces.UserIO;
 
-import java.util.HashMap;
+import java.util.Map;
 
-public class Game implements DisplayBoard {
-    private Board board;
-    private HashMap<String, Integer> rowWordMap;
-    private HashMap<String, Integer> columnWordMap;
-    private EasyAI easyAI;
-    private DisplayBoard displayBoard;
+public class Game implements UserIO {
+    private final GameContainer board;
+    private final GameDifficulty gameDifficulty;
+    private final UserIO userIO;
+
+    private final Map<String, Integer> rowWordMap = Map.of(
+            "arriba", 0,
+            "medio", 1,
+            "abajo", 2
+    );
+
+    private final Map<String, Integer> columnWordMap = Map.of(
+            "izquierda", 0,
+            "centro", 1,
+            "derecha", 2
+    );
     
     public Game() {
-        board = new Board();
-        rowWordMap = new HashMap<>();
-        columnWordMap = new HashMap<>();
+        board = new GameBoard();
 
-        rowWordMap.put("arriba", 0);
-        rowWordMap.put("medio", 1);
-        rowWordMap.put("abajo", 2);
-
-        columnWordMap.put("izquierda", 0);
-        columnWordMap.put("centro", 1);
-        columnWordMap.put("derecha", 2);
-
-        easyAI = new EasyAI();
-        displayBoard = new Graphics(board, this); // Initialize Graphics
+        gameDifficulty = new EasyAI();
+        userIO = new UserConsoleInterpreter(board, this); // Initialize UserConsoleInterpreter
     }
 
     public void start(String[] args) {
-        displayBoard.validateArguments(args);
+        userIO.validateArguments(args);
         showBoard();
 
         boolean gameRunning = true;
@@ -54,12 +56,12 @@ public class Game implements DisplayBoard {
 
     @Override
     public void showBoard() {
-        displayBoard.showBoard(); // Delegate to Graphics
+        userIO.showBoard(); // Delegate to UserConsoleInterpreter
     }
 
     @Override
     public void playerMove() {
-        displayBoard.playerMove(); // Delegate to Graphics
+        userIO.playerMove(); // Delegate to UserConsoleInterpreter
     }
 
     @Override
@@ -71,7 +73,7 @@ public class Game implements DisplayBoard {
         int yKey = rowWordMap.get(yPosition);
         int xKey = columnWordMap.get(xPosition);
         if (board.canPlace(yKey, xKey)) {
-            board.setCell(yKey, xKey, symbol);
+            board.setGameSlot(yKey, xKey, symbol);
             return true;
         }
         return false;
@@ -96,8 +98,8 @@ public class Game implements DisplayBoard {
     }
 
     public void aiMove() {
-        int[] move = easyAI.getRandomMove(board);
-        board.setCell(move[0], move[1], 'O');
+        int[] move = gameDifficulty.getRandomMove(board);
+        board.setGameSlot(move[0], move[1], 'O');
     }
 
     public boolean isTied() {

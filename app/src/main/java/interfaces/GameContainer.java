@@ -14,6 +14,6 @@ public interface GameContainer {
     char getGameSymbolAtSlot(int yCoordinate, int xCoordinate);
 
 
-    boolean verifyWin(Token playerToken, Token computerToken);
+    boolean verifyWin(Token playerToken);
 
 }

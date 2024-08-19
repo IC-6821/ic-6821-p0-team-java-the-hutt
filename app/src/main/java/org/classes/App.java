@@ -10,7 +10,7 @@ public class App {
         Game game = new Game();
         game.start(args);
 
-/*         Graphics graphics = new Graphics(null, null);
+/*         UserConsoleInterpreter graphics = new UserConsoleInterpreter(null, null);
         graphics.validateArguments(args);
 
         Game game = new Game();

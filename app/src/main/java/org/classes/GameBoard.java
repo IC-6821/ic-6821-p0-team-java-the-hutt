@@ -33,10 +33,6 @@ public final class GameBoard implements GameContainer {
         return board[yCoordinate][xCoordinate];
     }
 
-    @Override
-    public boolean verifyWin(Token playerToken, Token computerToken) {
-        return false;
-    }
 
     private boolean leftColumnWin(Token playerToken) {
         char playerSymbol = playerToken.getSymbol();
