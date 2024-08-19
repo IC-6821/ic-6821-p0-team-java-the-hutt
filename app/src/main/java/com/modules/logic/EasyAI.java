@@ -23,4 +23,8 @@ public class EasyAI {
 
         return move;
     }
+
+    public void makeMove() {
+        // TODO: implement or discard this method
+    }
 }
