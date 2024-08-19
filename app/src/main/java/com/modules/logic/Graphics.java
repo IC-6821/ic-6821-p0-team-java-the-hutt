@@ -1,6 +1,4 @@
-package org.classes;
-
-import interfaces.DisplayBoard;
+package com.modules.logic;
 
 import java.util.Scanner;
 
