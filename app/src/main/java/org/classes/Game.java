@@ -1,5 +1,6 @@
-package com.modules.logic;
-import com.modules.logic.Graphics;
+package org.classes;
+import interfaces.DisplayBoard;
+
 import java.util.HashMap;
 
 public class Game implements DisplayBoard {
@@ -41,7 +42,7 @@ public class Game implements DisplayBoard {
                 System.out.println("Game is tied!");
                 gameRunning = false;
             } else {
-                easyAI.makeMove(); //TODO
+                //easyAI.makeMove(); TODO
                 showBoard();                            // shows the updated board
                 if (verifyWin('O')) {     // if the AI has won
                     System.out.println("AI wins!");

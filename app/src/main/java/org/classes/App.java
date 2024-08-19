@@ -1,7 +1,10 @@
-import com.modules.logic.Game;
+package org.classes;
 
+public class App {
+    public String getGreeting() {
+        return "Hello World!";
+    }
 
-public class Main {
     public static void main(String[] args) {
 
         Game game = new Game();

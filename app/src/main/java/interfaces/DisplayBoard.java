@@ -1,5 +1,4 @@
-package com.modules.logic;
-
+package interfaces;
 public interface DisplayBoard {
     void showBoard();
     void playerMove();
