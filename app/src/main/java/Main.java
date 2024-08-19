@@ -1,9 +1,13 @@
 import com.modules.logic.Game;
-import com.modules.logic.Graphics;
+
 
 public class Main {
     public static void main(String[] args) {
-        Graphics graphics = new Graphics(null, null);
+
+        Game game = new Game();
+        game.start(args);
+
+/*         Graphics graphics = new Graphics(null, null);
         graphics.validateArguments(args);
 
         Game game = new Game();
@@ -25,6 +29,6 @@ public class Main {
             if (game.verifyWin('O')) { // Check if the AI has won
                 break;
             }
-        }
-    }
+        }*/
+    } 
 }

@@ -1,5 +1,5 @@
 package com.modules.logic;
-
+import com.modules.logic.Graphics;
 import java.util.HashMap;
 
 public class Game implements DisplayBoard {
@@ -8,7 +8,7 @@ public class Game implements DisplayBoard {
     private HashMap<String, Integer> columnWordMap;
     private EasyAI easyAI;
     private DisplayBoard displayBoard;
-
+    
     public Game() {
         board = new Board();
         rowWordMap = new HashMap<>();
@@ -24,6 +24,31 @@ public class Game implements DisplayBoard {
 
         easyAI = new EasyAI();
         displayBoard = new Graphics(board, this); // Initialize Graphics
+    }
+
+    public void start(String[] args) {
+        displayBoard.validateArguments(args);
+        showBoard();
+
+        boolean gameRunning = true;
+
+        while (gameRunning) {
+            playerMove();
+            if (verifyWin('X')) {         // if the player has won
+                System.out.println("Player wins!");
+                gameRunning = false;
+            } else if (isTied()) {                      // if the game is tied
+                System.out.println("Game is tied!");
+                gameRunning = false;
+            } else {
+                easyAI.makeMove(); //TODO
+                showBoard();                            // shows the updated board
+                if (verifyWin('O')) {     // if the AI has won
+                    System.out.println("AI wins!");
+                    gameRunning = false;
+                }
+            }
+        }
     }
 
     @Override
