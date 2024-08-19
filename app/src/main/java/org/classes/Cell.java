@@ -1,19 +1,21 @@
-package com.modules.logic;
+package org.classes;
 
-class Cell{
+import interfaces.GameCell;
+
+class Cell implements GameCell {
     private char symbol;
 
     //Creates cell with an initial value of ' '.
-    Cell(){
+    Cell() {
         this.symbol = ' ';
     }
 
     //Returns symbol from cell, will be used later for verification purposes
-    public char getSymbol(){
+    public char getSymbol() {
         return this.symbol;
     }
 
-    public void setSymbol(char figure){
+    public void setSymbol(char figure) {
         this.symbol = figure;
     }
 }
