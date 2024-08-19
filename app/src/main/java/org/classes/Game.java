@@ -5,7 +5,7 @@ import interfaces.UserIO;
 
 import java.util.Map;
 
-public class Game implements UserIO {
+public class Game  { //TODO: define game interface
     private final GameContainer board;
     private final GameDifficulty gameDifficulty;
     private final UserIO userIO;
@@ -25,7 +25,7 @@ public class Game implements UserIO {
     public Game() {
         board = new GameBoard();
 
-        gameDifficulty = new EasyAI();
+        gameDifficulty = new EasyAI(this.board);
         userIO = new UserConsoleInterpreter(board, this); // Initialize UserConsoleInterpreter
     }
 
