@@ -27,8 +27,7 @@ import java.util.Scanner;
         final String dArgument = "d";
         final String unknownParameter = "Parámetro desconocido, ejecuta el juego nuevamente.";
         final String difficultyNotAvailable = "Esta dificultad aún no está disponible. Utilice -n f para jugar.";
-        System.out.println("args: 1: " + args[0] + ", args: 2: " + args[1]);
-        System.out.println("args len: " + args.length);
+
         if (args.length != 2) {
             showToPlayer(invalidArguments);
             this.chosenLevel = GameLevel.UNAVAILABLE;
@@ -55,7 +54,6 @@ import java.util.Scanner;
             this.chosenLevel =  GameLevel.HARD;
         }
 
-        System.out.println(this.chosenLevel.name());
     }
 
 

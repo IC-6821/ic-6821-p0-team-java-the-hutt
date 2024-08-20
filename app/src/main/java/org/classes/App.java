@@ -6,12 +6,13 @@ import interfaces.Playable;
 
 public final class App {
 
-    // Private constructor to prevent instantiation
-    private App() {
-        throw new UnsupportedOperationException("App class cannot be instantiated");
+    public String getGreeting() {
+        return "Bienvenido a ticTacToe!";
     }
 
     public static void main(String[] args) {
+        System.out.println(new App().getGreeting());
+
         final GameContainer ticTacToeGameBoard = new GameBoard();
         final UserIO userInterpreter = new UserConsoleInterpreter();
         userInterpreter.processArguments(args); // Creates a defined GameLevel container

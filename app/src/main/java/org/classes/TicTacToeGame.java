@@ -19,7 +19,6 @@ public final class TicTacToeGame implements Playable {
         this.userIO = userInterface;
         this.player1Token = Token.X;
         this.player2Token = Token.O;
-        System.out.println(userIO.getChosenLevel().toString());
         if (userIO.getChosenLevel() == GameLevel.EASY) {
             this.gameDifficulty = new EasyAI(board);
         } else {
@@ -42,26 +41,27 @@ public final class TicTacToeGame implements Playable {
             currentSlot = userIO.interpretPlayerMove();
 
             if (currentSlot != null) {
-                if (placeIfValidMove(currentSlot.getRow(), currentSlot.getColumn(), player1Token)){
+                if (placeIfValidMove(currentSlot.getRow(), currentSlot.getColumn(), player1Token)) {
                     //userIO.interpretPlayerMove();
                     if (board.verifyWin(player1Token)) {
+                        userIO.showToPlayer(board.generateDisplayableBoard());
                         userIO.showToPlayer(victoryMessage);
                         gameRunning = false;
 
                     } else if (board.isTied()) {
+                        userIO.showToPlayer(board.generateDisplayableBoard());
                         userIO.showToPlayer(tieMessage);
                         gameRunning = false;
 
                     } else {
                         aiMove();
+                        userIO.showToPlayer(board.generateDisplayableBoard());
                         if (board.verifyWin(player2Token)) {
                             userIO.showToPlayer(lossMessage);
                             gameRunning = false;
                         }
                     }
-                    userIO.showToPlayer(board.generateDisplayableBoard());
-                }
-                else {
+                } else {
                     userIO.showToPlayer(slotTakenMessage);
                 }
 
