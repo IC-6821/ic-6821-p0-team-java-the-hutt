@@ -14,7 +14,7 @@ public final class EasyAI implements GameDifficulty {
     private final Random positionGenerator;
     private final GameContainer board;
 
-    public EasyAI(GameContainer board) {
+    public EasyAI(final GameContainer board) {
         positionGenerator = new Random();
         this.board = board;
     }

@@ -35,48 +35,48 @@ public final class GameBoard implements GameContainer {
 
 
     private boolean leftColumnWin(Token playerToken) {
-        char playerSymbol = playerToken.getSymbol();
+        final char playerSymbol = playerToken.getSymbol();
 
         return board[0][0] == playerSymbol  && board[1][0] == playerSymbol && board[2][0] == playerSymbol;
     }
 
     private boolean midColumnWin(Token playerToken) {
-        char playerSymbol = playerToken.getSymbol();
+        final char playerSymbol = playerToken.getSymbol();
 
         return board[0][1] == playerSymbol  && board[1][1] == playerSymbol && board[2][1] == playerSymbol;
     }
 
     private boolean rightColumnWin(Token playerToken) {
-        char playerSymbol = playerToken.getSymbol();
+        final char playerSymbol = playerToken.getSymbol();
         return board[0][2] == playerSymbol  && board[1][2] == playerSymbol && board[2][2] == playerSymbol;
     }
 
     private boolean topRowWin(Token playerToken) {
-        char playerSymbol = playerToken.getSymbol();
+        final char playerSymbol = playerToken.getSymbol();
 
         return board[0][0] == playerSymbol  && board[0][1] == playerSymbol && board[0][2] == playerSymbol;
     }
 
     private boolean midRowWin(Token playerToken) {
-        char playerSymbol = playerToken.getSymbol();
+        final char playerSymbol = playerToken.getSymbol();
 
         return board[1][0] == playerSymbol  && board[1][1] == playerSymbol && board[1][2] == playerSymbol;
     }
 
     private boolean bottomRowWin(Token playerToken) {
-        char playerSymbol = playerToken.getSymbol();
+        final char playerSymbol = playerToken.getSymbol();
 
         return board[2][0] == playerSymbol  && board[2][1] == playerSymbol && board[2][2] == playerSymbol;
     }
 
     private boolean mainDiagonalWin(Token playerToken) {
-        char playerSymbol = playerToken.getSymbol();
+        final char playerSymbol = playerToken.getSymbol();
 
         return board[0][0] == playerSymbol  && board[1][1] == playerSymbol && board[2][2] == playerSymbol;
     }
 
     private boolean secondaryDiagonalWin(Token playerToken) {
-        char playerSymbol = playerToken.getSymbol();
+        final char playerSymbol = playerToken.getSymbol();
 
         return board[2][0] == playerSymbol  && board[1][1] == playerSymbol && board[0][2] == playerSymbol;
     }

@@ -14,7 +14,7 @@ public enum BoardPosition {
     private final int row;
     private final int column;
 
-    BoardPosition(int row, int column) {
+    BoardPosition(final int row, final int column) {
         this.row = row;
         this.column = column;
     }
