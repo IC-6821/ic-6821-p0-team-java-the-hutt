@@ -3,10 +3,14 @@ package org.classes;
 import interfaces.GameContainer;
 
 public final class GameBoard implements GameContainer {
+    private static final char ENDLINE = '\n';
     private final char[][] board;
     private static final int MAX_POSITION = 9;
     private static final int ROWS = 3;
     private static final int COLUMNS = 3;
+    private static final String VERTICAL_SEPARATOR = "-----------";
+    private static final char HORIZONTAL_SEPARATOR = '|';
+    private static final String WHITESPACE = " ";
 
     GameBoard() {
         board = new char[ROWS][COLUMNS];
@@ -20,17 +24,16 @@ public final class GameBoard implements GameContainer {
 
 
     @Override
-    public void setGameSlot(int yCoordinate, int xCoordinate, Token currentPlayerToken) {
-        board[yCoordinate][xCoordinate] = currentPlayerToken.getSymbol();
+    public void setGameSlot(int row, int column, Token currentPlayerToken) {
+        board[row][column] = currentPlayerToken.getSymbol();
     }
 
-    public boolean canPlace(int yCoordinate, int xCoordinate) {
-        return board[yCoordinate][xCoordinate] == ' ';
+    public boolean canPlace(int row, int column) {
+        return board[row][column] == ' ';
     }
 
-
-    public char getGameSymbolAtSlot(int yCoordinate, int xCoordinate) {
-        return board[yCoordinate][xCoordinate];
+    private char getSymbolAt(int row, int column) {
+        return board[row][column];
     }
 
 
@@ -106,5 +109,23 @@ public final class GameBoard implements GameContainer {
 
     public boolean isTied() {
         return countBusyCells() == MAX_POSITION;
+    }
+
+
+    public String generateDisplayableBoard() {
+        final StringBuilder displayableBoard = new StringBuilder();
+        for (int i = 0; i < ROWS; i++) {
+            for (int j = 0; j < COLUMNS; j++) {
+                displayableBoard.append(WHITESPACE).append(this.getSymbolAt(i, j)).append(WHITESPACE);
+                if (j < COLUMNS - 1) {
+                    displayableBoard.append(VERTICAL_SEPARATOR);
+                }
+            }
+            displayableBoard.append(ENDLINE);
+            if (i < ROWS - 1) {
+                displayableBoard.append(HORIZONTAL_SEPARATOR);
+            }
+        }
+        return displayableBoard.toString();
     }
 }

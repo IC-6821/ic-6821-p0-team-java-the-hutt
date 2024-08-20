@@ -6,9 +6,6 @@ import java.util.Map;
 import java.util.Scanner;
 
  public final class UserConsoleInterpreter implements UserIO {
-    private static final String VERTICAL_SEPARATOR = "-----------";
-    private static final char HORIZONTAL_SEPARATOR = '|';
-    private static final String WHITESPACE = " ";
     private final Scanner userInputSource; // using the interface implemented by Scanner instead of the class
     private GameLevel chosenLevel;
 

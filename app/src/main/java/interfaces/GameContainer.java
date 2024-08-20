@@ -5,14 +5,9 @@ import org.classes.Token;
 
 public interface GameContainer {
 
-    void setGameSlot(int yCoordinate, int xCoordinate, Token currentPlayerToken);
+    void setGameSlot(int row, int column, Token currentPlayerToken);
 
-
-    boolean canPlace(int yCoordinate, int xCoordinate);
-
-
-    char getGameSymbolAtSlot(int yCoordinate, int xCoordinate);
-
+    boolean canPlace(int row, int column);
 
     boolean verifyWin(Token playerToken);
 

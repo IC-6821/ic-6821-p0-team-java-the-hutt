@@ -1,11 +1,13 @@
 package org.classes;
+
 import interfaces.GameContainer;
 import interfaces.GameDifficulty;
+import interfaces.Playable;
 import interfaces.UserIO;
 
 import java.util.Map;
 
-public class TicTacToeGame { //TODO: define game interface
+public final class TicTacToeGame implements Playable {
     private final GameContainer board;
     private final GameDifficulty gameDifficulty;
     private final UserIO userIO;
@@ -13,20 +15,8 @@ public class TicTacToeGame { //TODO: define game interface
     private final Token player2Token;
 
 
-    private final Map<String, Integer> rowWordMap = Map.of(
-            "arriba", 0,
-            "medio", 1,
-            "abajo", 2
-    );
-
-    private final Map<String, Integer> columnWordMap = Map.of(
-            "izquierda", 0,
-            "centro", 1,
-            "derecha", 2
-    );
-    
-    public TicTacToeGame(GameContainer TicTacToeBoard, UserIO userInterface) {
-        this.board = TicTacToeBoard;
+    public TicTacToeGame(final GameContainer ticTacToeBoard, final UserIO userInterface) {
+        this.board = ticTacToeBoard;
         this.userIO = userInterface;
         this.player1Token = Token.X;
         this.player2Token = Token.O;
@@ -34,72 +24,54 @@ public class TicTacToeGame { //TODO: define game interface
 
         if (userIO.getChosenLevel() == GameLevel.EASY) {
             this.gameDifficulty = new EasyAI(board);
+        } else {
+            this.gameDifficulty = null;
         }
-        else this.gameDifficulty = null;
     }
 
     public void start() {
+        final String victoryMessage = "Has ganado!";
+        final String lossMessage = "Has perdido!";
+        final String tieMessage = "Has empatado!";
+        final String retryMessage = "combinación incorrecta de coordenadas. Intente nuevamente.";
+        BoardPosition currentSlot;
 
         boolean gameRunning = true;
 
         while (gameRunning) {
-            //  playerMove(); TODO fix
-            if (verifyWin(player1Token)) {         // if the player has won
-                System.out.println("Player wins!");
-                gameRunning = false;
-            } else if (isTied()) {                      // if the game is tied
-                System.out.println("TicTacToeGame is tied!");
-                gameRunning = false;
-            } else {
-                //easyAI.makeMove(); TODO
-                //showBoard();                            // shows the updated board
-                if (verifyWin(player2Token)) {     // if the AI has won
-                    System.out.println("AI wins!");
+            currentSlot = userIO.interpretPlayerMove();
+            if (currentSlot != null) {
+                placeIfValidMove(currentSlot.getRow(), currentSlot.getColumn(), player1Token);
+                userIO.interpretPlayerMove();
+                if (board.verifyWin(player1Token)) {
+                    userIO.showToPlayer(victoryMessage);
                     gameRunning = false;
+
+                } else if (board.isTied()) {
+                    userIO.showToPlayer(tieMessage);
+                    gameRunning = false;
+
+                } else {
+                    aiMove();
+                    if (board.verifyWin(player2Token)) {
+                        userIO.showToPlayer(lossMessage);
+                        gameRunning = false;
+                    }
                 }
+            } else {
+                userIO.showToPlayer(retryMessage);
             }
         }
     }
 
-    //TODO: change method signature in the interface
-    public boolean placeIfValidMove(String yPosition, String xPosition, Token currentPlayerToken) {
-        int yKey = rowWordMap.get(yPosition);
-        int xKey = columnWordMap.get(xPosition);
-        if (board.canPlace(yKey, xKey)) {
-            board.setGameSlot(yKey, xKey, currentPlayerToken);
-            return true;
+    public void placeIfValidMove(int row, int column, Token currentPlayerToken) {
+        if (board.canPlace(row, column)) {
+            board.setGameSlot(row, column, currentPlayerToken);
         }
-        return false;
-    }
-
-    public boolean checkChosenPosition(String yPosition, String xPosition) {
-        return rowWordMap.containsKey(yPosition) && columnWordMap.containsKey(xPosition);
-    }
-
-    public boolean verifyWin(Token currentPlayerToken) {
-        boolean winConfirmed = board.verifyWin(currentPlayerToken);
-        String winMessage = "Perdiste...";
-        if (winConfirmed && currentPlayerToken.getSymbol() == 'X') {
-            winMessage = "Ganaste!";
-            System.out.println(winMessage);
-        }
-        if (winConfirmed && currentPlayerToken.getSymbol() == 'O') {
-            System.out.println(winMessage);
-        }
-        return winConfirmed;
     }
 
     public void aiMove() {
-        int[] move = gameDifficulty.generateComputerMove();
+        final int[] move = gameDifficulty.generateComputerMove();
         board.setGameSlot(move[0], move[1], player2Token);
-    }
-
-    public boolean isTied() {
-        //TODO: place this block in the main driver. This shouldn't be part of this class
-        if (board.isTied()) {
-            userIO.showToPlayer("empate"); //todo remove literals
-            return true;
-        }
-        return false;
     }
 }

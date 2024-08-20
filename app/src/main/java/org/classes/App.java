@@ -1,10 +1,21 @@
 package org.classes;
 
-public class App {
-    public String getGreeting() {
-        return "Hello World!";
+import interfaces.GameContainer;
+import interfaces.UserIO;
+import interfaces.Playable;
+
+public final class App {
+
+    // Private constructor to prevent instantiation
+    private App() {
+        throw new UnsupportedOperationException("App class cannot be instantiated");
     }
 
     public static void main(String[] args) {
-    } 
+        final GameContainer ticTacToeGameBoard = new GameBoard();
+        final UserIO userInterpreter = new UserConsoleInterpreter();
+        final Playable ticTacToe = new TicTacToeGame(ticTacToeGameBoard, userInterpreter);
+        userInterpreter.processArguments(args); // Creates a defined GameLevel container
+        ticTacToe.start();
+    }
 }
