@@ -1,6 +1,6 @@
 package interfaces;
 
-public interface GameSet {
+public interface Playable {
 
     boolean placeIfValidMove(String yPosition, String xPosition, char symbol);
 

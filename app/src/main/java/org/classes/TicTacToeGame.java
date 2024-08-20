@@ -5,10 +5,13 @@ import interfaces.UserIO;
 
 import java.util.Map;
 
-public class Game  { //TODO: define game interface
+public class TicTacToeGame { //TODO: define game interface
     private final GameContainer board;
     private final GameDifficulty gameDifficulty;
     private final UserIO userIO;
+    private final Token player1Token;
+    private final Token player2Token;
+
 
     private final Map<String, Integer> rowWordMap = Map.of(
             "arriba", 0,
@@ -22,31 +25,35 @@ public class Game  { //TODO: define game interface
             "derecha", 2
     );
     
-    public Game() {
-        board = new GameBoard();
+    public TicTacToeGame(GameContainer TicTacToeBoard, UserIO userInterface) {
+        this.board = TicTacToeBoard;
+        this.userIO = userInterface;
+        this.player1Token = Token.X;
+        this.player2Token = Token.O;
 
-        gameDifficulty = new EasyAI(this.board);
-        userIO = new UserConsoleInterpreter(board, this); // Initialize UserConsoleInterpreter
+
+        if (userIO.getChosenLevel() == GameLevel.EASY) {
+            this.gameDifficulty = new EasyAI(board);
+        }
+        else this.gameDifficulty = null;
     }
 
-    public void start(String[] args) {
-        userIO.validateArguments(args);
-        showBoard();
+    public void start() {
 
         boolean gameRunning = true;
 
         while (gameRunning) {
-            playerMove();
-            if (verifyWin('X')) {         // if the player has won
+            //  playerMove(); TODO fix
+            if (verifyWin(player1Token)) {         // if the player has won
                 System.out.println("Player wins!");
                 gameRunning = false;
             } else if (isTied()) {                      // if the game is tied
-                System.out.println("Game is tied!");
+                System.out.println("TicTacToeGame is tied!");
                 gameRunning = false;
             } else {
                 //easyAI.makeMove(); TODO
-                showBoard();                            // shows the updated board
-                if (verifyWin('O')) {     // if the AI has won
+                //showBoard();                            // shows the updated board
+                if (verifyWin(player2Token)) {     // if the AI has won
                     System.out.println("AI wins!");
                     gameRunning = false;
                 }
@@ -54,26 +61,12 @@ public class Game  { //TODO: define game interface
         }
     }
 
-    @Override
-    public void showBoard() {
-        userIO.showBoard(); // Delegate to UserConsoleInterpreter
-    }
-
-    @Override
-    public void playerMove() {
-        userIO.playerMove(); // Delegate to UserConsoleInterpreter
-    }
-
-    @Override
-    public void validateArguments(String[] args) {
-        // No need to implement this here
-    }
-
-    public boolean placeIfValidMove(String yPosition, String xPosition, char symbol) {
+    //TODO: change method signature in the interface
+    public boolean placeIfValidMove(String yPosition, String xPosition, Token currentPlayerToken) {
         int yKey = rowWordMap.get(yPosition);
         int xKey = columnWordMap.get(xPosition);
         if (board.canPlace(yKey, xKey)) {
-            board.setGameSlot(yKey, xKey, symbol);
+            board.setGameSlot(yKey, xKey, currentPlayerToken);
             return true;
         }
         return false;
@@ -83,29 +76,28 @@ public class Game  { //TODO: define game interface
         return rowWordMap.containsKey(yPosition) && columnWordMap.containsKey(xPosition);
     }
 
-    public boolean verifyWin(char playingSymbol) {
-        boolean winConfirmed = board.verifyWin(playingSymbol);
+    public boolean verifyWin(Token currentPlayerToken) {
+        boolean winConfirmed = board.verifyWin(currentPlayerToken);
         String winMessage = "Perdiste...";
-        if (winConfirmed && playingSymbol == 'X') {
+        if (winConfirmed && currentPlayerToken.getSymbol() == 'X') {
             winMessage = "Ganaste!";
-            showBoard();
             System.out.println(winMessage);
         }
-        if (winConfirmed && playingSymbol == 'O') {
+        if (winConfirmed && currentPlayerToken.getSymbol() == 'O') {
             System.out.println(winMessage);
         }
         return winConfirmed;
     }
 
     public void aiMove() {
-        int[] move = gameDifficulty.getRandomMove(board);
-        board.setGameSlot(move[0], move[1], 'O');
+        int[] move = gameDifficulty.generateComputerMove();
+        board.setGameSlot(move[0], move[1], player2Token);
     }
 
     public boolean isTied() {
-        if (board.checkForTie()) {
-            showBoard();
-            System.out.println("Empate");
+        //TODO: place this block in the main driver. This shouldn't be part of this class
+        if (board.isTied()) {
+            userIO.showToPlayer("empate"); //todo remove literals
             return true;
         }
         return false;

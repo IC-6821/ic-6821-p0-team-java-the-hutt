@@ -16,4 +16,6 @@ public interface GameContainer {
 
     boolean verifyWin(Token playerToken);
 
+    boolean isTied();
+
 }

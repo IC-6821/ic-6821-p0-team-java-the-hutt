@@ -104,7 +104,7 @@ public final class GameBoard implements GameContainer {
         return count;
     }
 
-    public boolean checkForTie() {
+    public boolean isTied() {
         return countBusyCells() == MAX_POSITION;
     }
 }

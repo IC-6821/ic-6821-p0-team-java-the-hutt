@@ -1,7 +1,7 @@
 package org.classes;
 
 import interfaces.GameContainer;
-import interfaces.GameSet;
+import interfaces.Playable;
 import interfaces.UserIO;
 
 import java.util.Map;
@@ -12,8 +12,9 @@ public class UserConsoleInterpreter implements UserIO {
     private static final String verticalSeparator = "-----------";
     private static final char horizontalSeparator = '|';
     private static final String WHITESPACE = " ";
-    private final GameSet game; //TODO: remove this reference if not used
+    private final Playable game; //TODO: remove this reference if not used
     private final Scanner userInputSource; // using the interface implemented by Scanner instead of the class
+    private GameLevel chosenLevel;
 
     private static final Map<String, BoardPosition> inputMap = Map.of(
             "top-left", BoardPosition.TOP_LEFT,
@@ -27,7 +28,7 @@ public class UserConsoleInterpreter implements UserIO {
             "bottom-right", BoardPosition.BOTTOM_RIGHT
     );
 
-    public UserConsoleInterpreter(GameContainer board, GameSet game) {
+    public UserConsoleInterpreter(GameContainer board, Playable game) {
         this.board = board;
         this.game = game;
         this.userInputSource = new Scanner(System.in);
@@ -45,7 +46,7 @@ public class UserConsoleInterpreter implements UserIO {
 
 
     @Override
-    public GameLevel processArguments(String[] args) {
+    public void processArguments(String[] args) {
         String invalidArguments = "Argumentos incompatibles. Se esperan 2 para ejecutar el juego. \n Sugerencia: usar -n f";
         String nArgument = "-n";
         String fArgument = "f";
@@ -55,31 +56,30 @@ public class UserConsoleInterpreter implements UserIO {
         String difficulty_not_available = "Esta dificultad aún no está disponible. Utilice -n f para jugar.";
         if (args.length != 2) {
             showToPlayer(invalidArguments);
-            return GameLevel.UNAVAILABLE;
+            this.chosenLevel = GameLevel.UNAVAILABLE;
         }
 
         if (!args[0].equals(nArgument)) {
             showToPlayer(unknown_parameter);
-            return GameLevel.UNAVAILABLE;
+            this.chosenLevel = GameLevel.UNAVAILABLE;
         }
 
         String difficulty = args[1];
 
         if (difficulty.equals(fArgument)) {
-
-            return GameLevel.EASY;
+            this.chosenLevel = GameLevel.EASY;
         }
 
         if (difficulty.equals(mArgument)) {
             showToPlayer(difficulty_not_available);
-            return GameLevel.MEDIUM;
+            this.chosenLevel = GameLevel.MEDIUM;
         }
 
         if(difficulty.equals(dArgument)) {
             showToPlayer(difficulty_not_available);
-            return GameLevel.HARD;
+            this.chosenLevel =  GameLevel.HARD;
         }
-    return GameLevel.UNAVAILABLE;
+    this.chosenLevel =  GameLevel.UNAVAILABLE;
     }
 
 
@@ -97,11 +97,10 @@ public class UserConsoleInterpreter implements UserIO {
             case "abajo derecha" -> BoardPosition.BOTTOM_RIGHT;
             default -> null;
         };
-
-
-
-
     }
 
 
+    public GameLevel getChosenLevel() {
+        return chosenLevel;
+    }
 }
