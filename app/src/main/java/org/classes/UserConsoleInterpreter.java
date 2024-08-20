@@ -12,7 +12,8 @@ public class UserConsoleInterpreter implements UserIO {
     private static final String verticalSeparator = "-----------";
     private static final char horizontalSeparator = '|';
     private static final String WHITESPACE = " ";
-    private final GameSet game;
+    private final GameSet game; //TODO: remove this reference if not used
+    private final Scanner userInputSource; // using the interface implemented by Scanner instead of the class
 
     private static final Map<String, BoardPosition> inputMap = Map.of(
             "top-left", BoardPosition.TOP_LEFT,
@@ -29,75 +30,78 @@ public class UserConsoleInterpreter implements UserIO {
     public UserConsoleInterpreter(GameContainer board, GameSet game) {
         this.board = board;
         this.game = game;
+        this.userInputSource = new Scanner(System.in);
     }
 
-    private void printGameboardRow(int currentRow, int currentColumn) {
+    private void printGameboardRow(int currentRow, int currentColumn) { //TODO: remove
         System.out.print(WHITESPACE + this.board.getGameSymbolAtSlot(currentRow, currentColumn) + WHITESPACE);
         if (currentColumn < 2) System.out.print(horizontalSeparator);
     }
 
-    @Override
-    public void showBoard() {
-        for (int rows = 0; rows < 3; rows++) {
-            for (int columns = 0; columns < 3; columns++) {
-                printGameboardRow(rows, columns);
-            }
-            System.out.println();
-            if (rows < 2) System.out.println(verticalSeparator);
-        }
+
+    public void showToPlayer(String message) {
+    System.out.println(message);
     }
 
+
     @Override
-    public void validateArguments(String[] args) {
-        String invalid_arguments = "Argumentos incompatibles. Se esperan 2 para ejecutar el juego. \n Sugerencia: usar -n f";
-        String n_argument = "-n";
-        String f_argument = "f";
+    public GameLevel processArguments(String[] args) {
+        String invalidArguments = "Argumentos incompatibles. Se esperan 2 para ejecutar el juego. \n Sugerencia: usar -n f";
+        String nArgument = "-n";
+        String fArgument = "f";
+        String mArgument = "m";
+        String dArgument = "d";
         String unknown_parameter = "Parámetro desconocido, ejecuta el juego nuevamente.";
         String difficulty_not_available = "Esta dificultad aún no está disponible. Utilice -n f para jugar.";
         if (args.length != 2) {
-            System.out.println(invalid_arguments);
-            return;
+            showToPlayer(invalidArguments);
+            return GameLevel.UNAVAILABLE;
         }
 
-        if (!args[0].equals(n_argument)) {
-            System.out.println(unknown_parameter);
-            return;
+        if (!args[0].equals(nArgument)) {
+            showToPlayer(unknown_parameter);
+            return GameLevel.UNAVAILABLE;
         }
 
         String difficulty = args[1];
-        if (!difficulty.equals(f_argument)) {
-            System.out.println(difficulty_not_available);
-            return;
+
+        if (difficulty.equals(fArgument)) {
+
+            return GameLevel.EASY;
         }
+
+        if (difficulty.equals(mArgument)) {
+            showToPlayer(difficulty_not_available);
+            return GameLevel.MEDIUM;
+        }
+
+        if(difficulty.equals(dArgument)) {
+            showToPlayer(difficulty_not_available);
+            return GameLevel.HARD;
+        }
+    return GameLevel.UNAVAILABLE;
     }
 
-    @Override
+
     public BoardPosition interpretPlayerMove() {
-        return null;
+        String move = userInputSource.nextLine();
+        return switch (move) {
+            case "arriba izquierda" -> BoardPosition.TOP_LEFT;
+            case "arriba centro" -> BoardPosition.TOP_CENTER;
+            case "arriba derecha" -> BoardPosition.TOP_RIGHT;
+            case "medio izquierda" -> BoardPosition.MIDDLE_LEFT;
+            case "medio centro" -> BoardPosition.MIDDLE_CENTER;
+            case "medio derecha" -> BoardPosition.MIDDLE_RIGHT;
+            case "abajo izquierda" -> BoardPosition.BOTTOM_LEFT;
+            case "abajo centro" -> BoardPosition.BOTTOM_CENTER;
+            case "abajo derecha" -> BoardPosition.BOTTOM_RIGHT;
+            default -> null;
+        };
+
+
+
+
     }
 
-    @Override
-    public void playerMove() {
-        Scanner userInput = new Scanner(System.in);
-        boolean moveFinished = false;
 
-        while (!moveFinished) {
-            System.out.print("Ingrese la fila (arriba, medio, abajo): ");
-            String yPosition = userInput.nextLine();
-            System.out.print("Ingrese la columna (izquierda, centro, derecha): ");
-            String xPosition = userInput.nextLine();
-
-            if (game.checkChosenPosition(yPosition, xPosition)) {
-                if (game.placeIfValidMove(yPosition, xPosition, 'X')) {
-                    moveFinished = true;
-                } else {
-                    System.out.println("Celda ocupada. Intente de nuevo.");
-                    game.showBoard();
-                }
-            } else {
-                System.out.println("Coordenadas incorrectas. Revise las opciones y redáctelas correctamente.");
-                game.showBoard();
-            }
-        }
-    }
 }
