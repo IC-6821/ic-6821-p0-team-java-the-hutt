@@ -2,24 +2,11 @@ package org.classes;
 
 import interfaces.UserIO;
 
-import java.util.Map;
 import java.util.Scanner;
 
  public final class UserConsoleInterpreter implements UserIO {
     private final Scanner userInputSource; // using the interface implemented by Scanner instead of the class
     private GameLevel chosenLevel;
-
-    private static final Map<String, BoardPosition> INPUT_MAP = Map.of(
-            "top-left", BoardPosition.TOP_LEFT,
-            "top-center", BoardPosition.TOP_CENTER,
-            "top-right", BoardPosition.TOP_RIGHT,
-            "middle-left", BoardPosition.MIDDLE_LEFT,
-            "middle-center", BoardPosition.MIDDLE_CENTER,
-            "middle-right", BoardPosition.MIDDLE_RIGHT,
-            "bottom-left", BoardPosition.BOTTOM_LEFT,
-            "bottom-center", BoardPosition.BOTTOM_CENTER,
-            "bottom-right", BoardPosition.BOTTOM_RIGHT
-    );
 
     public UserConsoleInterpreter() {
         this.userInputSource = new Scanner(System.in);
