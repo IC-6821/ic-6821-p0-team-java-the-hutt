@@ -118,12 +118,12 @@ public final class GameBoard implements GameContainer {
             for (int j = 0; j < COLUMNS; j++) {
                 displayableBoard.append(WHITESPACE).append(this.getSymbolAt(i, j)).append(WHITESPACE);
                 if (j < COLUMNS - 1) {
-                    displayableBoard.append(VERTICAL_SEPARATOR);
+                    displayableBoard.append(HORIZONTAL_SEPARATOR);
                 }
             }
             displayableBoard.append(ENDLINE);
             if (i < ROWS - 1) {
-                displayableBoard.append(HORIZONTAL_SEPARATOR);
+                displayableBoard.append(VERTICAL_SEPARATOR).append(ENDLINE);
             }
         }
         return displayableBoard.toString();

@@ -13,4 +13,6 @@ public interface GameContainer {
 
     boolean isTied();
 
+    String generateDisplayableBoard();
+
 }

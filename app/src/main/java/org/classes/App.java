@@ -14,8 +14,8 @@ public final class App {
     public static void main(String[] args) {
         final GameContainer ticTacToeGameBoard = new GameBoard();
         final UserIO userInterpreter = new UserConsoleInterpreter();
-        final Playable ticTacToe = new TicTacToeGame(ticTacToeGameBoard, userInterpreter);
         userInterpreter.processArguments(args); // Creates a defined GameLevel container
+        final Playable ticTacToe = new TicTacToeGame(ticTacToeGameBoard, userInterpreter);
         ticTacToe.start();
     }
 }

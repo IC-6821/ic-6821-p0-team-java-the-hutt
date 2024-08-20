@@ -4,7 +4,7 @@ import org.classes.Token;
 
 public interface Playable {
 
-    void placeIfValidMove(int row, int column, Token currentPlayerToken);
+    boolean placeIfValidMove(int row, int column, Token currentPlayerToken);
 
     void aiMove();
 
